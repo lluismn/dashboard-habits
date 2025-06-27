@@ -1,4 +1,5 @@
 import { Habit } from "@/types/habit";
+import { CSSProperties } from "react";
 
 interface HabitCardProps {
   habit: Habit;
@@ -37,22 +38,23 @@ export default function HabitCard({ habit, onToggle }: HabitCardProps) {
         <p>Status: {habit.done ? "Completed" : "Pending"}</p>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <button
-          onClick={() => onToggle(habit.id)}
-          style={{
-            padding: "0.5rem 1rem",
-            backgroundColor: "#4CAF50",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            width: "fit-content",
-            minWidth: "148px",
-          }}
-        >
+        <button onClick={() => onToggle(habit.id)} style={styles.button}>
           {habit.done ? "Mark as Pending" : "Mark as Completed"}
         </button>
       </div>
     </div>
   );
 }
+
+const styles: Record<string, CSSProperties> = {
+  button: {
+    padding: "0.5rem 1rem",
+    backgroundColor: "#4CAF50",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    width: "fit-content",
+    minWidth: "148px",
+  },
+};
