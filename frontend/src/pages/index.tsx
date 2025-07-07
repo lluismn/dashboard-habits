@@ -7,17 +7,16 @@ import { useRouter } from "next/router";
 export default function Home() {
   const router = useRouter();
   const [filtro, setFiltro] = useState<'all' | 'done' | 'pending'>('all'); // State to manage the filter. I used spanish term 'filtro' for consistency with code.
-  const [habits, setHabits] = useState<Habit[]>(() => {
-    if (typeof window !== "undefined") {
-      // Check if we are in the browser
-      const stored = localStorage.getItem("habits"); // Try to get habits from localStorage
-      return stored ? JSON.parse(stored) : habitsMock; // If found, parse it; otherwise, use the mock data
-    }
-    return habitsMock; // Default to mock data if not in the browser
-  });
+  const [habits, setHabits] = useState<Habit[]>([]);
+
   useEffect(() => {
-    localStorage.setItem("habits", JSON.stringify(habits)); // Store habits in localStorage whenever they change
-  }, [habits]);
+    fetch('http://localhost:4000/api/habits').then((res) => res.json()).then((data) => {
+      setHabits(data);
+      localStorage.setItem("habits", JSON.stringify(data)); // Store fetched habits in localStorage
+    }).catch((err) => {
+      console.error("Error fetching habits:", err);
+    })
+  })
 
   const toggleDone = (id: string) => {
     const newHabits = habits.map((habit) =>

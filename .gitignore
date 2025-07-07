@@ -18,9 +18,14 @@ node_modules/
 # next.js
 /.next/
 /out/
+/frontend/.next/
+/frontend/build/
+/frontend/cache/
 
 # production
-/build
+*.hot-update.*
+.cache/
+build/
 
 # misc
 .DS_Store
