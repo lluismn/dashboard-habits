@@ -1,9 +1,11 @@
 import express from "express";
+import { Habit } from "../models/Habit";
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.json({ message: 'List of habits' });
-})
+router.get("/", async (_req, res) => {
+  const habits = await Habit.find();
+  res.json(habits);
+});
 
 export default router;

@@ -3,8 +3,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import habitRoutes from "./routes/habits";
+import connectDB from "./connectDB";
 
 dotenv.config(); // Load environment variables from .env file
+connectDB() // Connect to MongoDB
 const app = express();
 const PORT = process.env.PORT || 4000;
 
@@ -18,6 +20,8 @@ const habits = [
   { id: 2, name: "Drink water", done: true },
   { id: 3, name: "Read 10 min", done: false },
 ];
+
+app.use("/api/habits", habitRoutes); // Use the habits routes
 
 app.get("/api/habits", (req, res) => {
     res.json(habits);
